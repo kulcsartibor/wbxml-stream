@@ -1,4 +1,6 @@
 rootProject.name = "wbxml-stream"
+include("wbxml-libs")
+include("wbxml-tools")
 
 
 pluginManagement {
