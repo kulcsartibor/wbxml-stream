@@ -374,7 +374,7 @@ public class WbXmlInitialization {
      * attribute values use two properties the second property will be found inside
      * the properties again.
      * @param props The properties to search for the second key
-     * @param The property key for the attribute value
+     * @param key The property key for the attribute value
      * @param value The value of the key (the token)
      * @return The WbXmlAttributeValueDef that this property represents
      */
@@ -400,7 +400,7 @@ public class WbXmlInitialization {
      * extensions use two properties the second property will be found inside
      * the properties again.
      * @param props The properties to search for the second key
-     * @param The property key for the extension
+     * @param key The property key for the extension
      * @param value The value of the key (the token)
      * @return The WbXmlExtensionDef that this property represents
      */

@@ -78,7 +78,7 @@ import org.w3c.dom.Document;
 public class GenericDirectoryTester {
     
     private String directory = null;
-    private WbXmlDefinition def = null;
+    protected WbXmlDefinition def = null;
     private JAXBContext jc = null;
     private XMLInputFactory inFact = null;
     private XMLOutputFactory outFact = null;
@@ -250,8 +250,7 @@ public class GenericDirectoryTester {
         }
     }
     
-    protected byte[] doc2WbXml(Document doc, WbXmlDefinition def, WbXmlVersion version,
-            WbXmlEncoder.StrtblType encoderType, boolean skipSpaces, boolean event) throws Exception {
+    protected byte[] doc2WbXml(Document doc, WbXmlDefinition def, WbXmlVersion version, WbXmlEncoder.StrtblType encoderType, boolean skipSpaces, boolean event) throws Exception {
         XMLStreamWriter xmlStreamWriter = null;
         XMLEventWriter xmlEventWriter = null;
         ByteArrayOutputStream out = null;
@@ -268,8 +267,7 @@ public class GenericDirectoryTester {
             }
             Transformer xformer = TransformerFactory.newInstance().newTransformer();
             Source domSource = new DOMSource(doc);
-            StAXResult staxResult = (event)? new StAXResult(xmlEventWriter) : 
-                    new StAXResult(xmlStreamWriter);
+            StAXResult staxResult = (event)? new StAXResult(xmlEventWriter) : new StAXResult(xmlStreamWriter);
             xformer.transform(domSource, staxResult);
             return out.toByteArray();
         } finally {
@@ -448,8 +446,7 @@ public class GenericDirectoryTester {
         testXmlDirectory(WbXmlVersion.VERSION_1_3, encoderType, skipSpaces, event);
     }
     
-    protected void testXmlDirectory(WbXmlVersion version, WbXmlEncoder.StrtblType encoderType,
-            boolean skipSpaces, boolean event) throws Exception {
+    protected void testXmlDirectory(WbXmlVersion version, WbXmlEncoder.StrtblType encoderType, boolean skipSpaces, boolean event) throws Exception {
         System.out.println(String.format("Testing XML DOM - version '%s' definition '%s' type=%s skip=%b event=%b...", 
                 version.getVersion(), def.getName(), encoderType.name(), skipSpaces, event));
         File[] files = getFiles(".xml");

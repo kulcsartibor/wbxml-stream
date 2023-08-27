@@ -35,13 +35,15 @@
  */
 package es.rickyepoderi.wbxml.stream;
 
-import com.sun.org.apache.xerces.internal.util.XMLChar;
+
 import es.rickyepoderi.wbxml.definition.WbXmlDefinition;
 import es.rickyepoderi.wbxml.definition.WbXmlNamespaceDef;
 import es.rickyepoderi.wbxml.document.WbXmlAttribute;
 import es.rickyepoderi.wbxml.document.WbXmlContent;
 import es.rickyepoderi.wbxml.document.WbXmlElement;
 import es.rickyepoderi.wbxml.document.WbXmlParser;
+import org.apache.xerces.util.XMLChar;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayDeque;

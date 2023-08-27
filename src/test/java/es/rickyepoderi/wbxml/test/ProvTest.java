@@ -35,9 +35,32 @@
  */
 package es.rickyepoderi.wbxml.test;
 
+import com.google.common.io.CharSource;
+import es.rickyepoderi.wbxml.definition.WbXmlDefinition;
 import es.rickyepoderi.wbxml.definition.WbXmlInitialization;
 import es.rickyepoderi.wbxml.document.WbXmlEncoder;
+import es.rickyepoderi.wbxml.document.WbXmlEncoder.StrtblType;
+import es.rickyepoderi.wbxml.document.WbXmlVersion;
+import es.rickyepoderi.wbxml.tools.Xml2WbXml;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  *
@@ -111,4 +134,80 @@ public class ProvTest extends GenericDirectoryTester {
     public void testWbXMLEventNo() throws Exception {
         testWbXmlDirectory(WbXmlEncoder.StrtblType.NO, true, true);
     }
+
+
+    @Test(groups = {"xml", "prov", "type-if-needed", "event" })
+    public void testStaticWbXml() throws Exception {
+        testXmlDirectory(WbXmlEncoder.StrtblType.IF_NEEDED, true, true);
+
+        String xmlContent = "<?xml version='1.0' encoding='UTF-8' ?>\n" +
+                "<!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\">\n" +
+                "<wap-provisioningdoc>\n" +
+                "    <characteristic type=\"BOOTSTRAP\">\n" +
+                "        <parm name=\"NAME\" value=\"PROV1\"/>\n" +
+                "    </characteristic>\n" +
+                "    <characteristic type=\"NAPDEF\">\n" +
+                "        <parm name=\"NAPID\" value=\"INTERNET\" />\n" +
+                "        <parm name=\"BEARER\" value=\"GSM-GPRS\" />\n" +
+                "        <parm name=\"NAME\" value=\"PROV1\" />\n" +
+                "        <parm name=\"NAP-ADDRESS\" value=\"test.apn\" />\n" +
+                "        <parm name=\"NAP-ADDRTYPE\" value=\"APN\" />\n" +
+                "        <parm name=\"INTERNET\" />\n" +
+                "        <characteristic type=\"NAPAUTHINFO\">\n" +
+                "            <parm name=\"AUTHTYPE\" value=\"PAP\"/>\n" +
+                "            <parm name=\"AUTHNAME\" value=\"user\"/>\n" +
+                "            <parm name=\"AUTHSECRET\" value=\"pass\"/>\n" +
+                "        </characteristic>\n" +
+                "    </characteristic>\n" +
+                "</wap-provisioningdoc>";
+
+
+        try(InputStream in = CharSource.wrap(xmlContent)
+                                            .asByteSource(StandardCharsets.UTF_8)
+                                            .openBufferedStream()){
+
+            DocumentBuilderFactory domFact = DocumentBuilderFactory.newInstance();
+            domFact.setNamespaceAware(true);
+            domFact.setIgnoringElementContentWhitespace(true);
+            domFact.setIgnoringComments(true);
+            domFact.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            DocumentBuilder domBuilder = domFact.newDocumentBuilder();
+            Document doc = domBuilder.parse(in);
+            doc.normalizeDocument();
+
+
+            byte[] bytes  = doc2WbXml(doc, def, WbXmlVersion.VERSION_1_3, StrtblType.ALWAYS, true, true);
+
+            Files.write(Paths.get("/Users/kulcsart/Repos/Rocam/temp/j.wbxml"), bytes);
+
+
+            Document doc2 = wbxml2doc(bytes, def, true);
+
+
+            printDocument(doc2, System.out);
+
+            System.out.println(doc2);
+
+
+        } catch (Exception e){
+            throw e;
+        }
+
+
+
+    }
+
+    public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+        transformer.transform(new DOMSource(doc),
+                new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+    }
+
 }

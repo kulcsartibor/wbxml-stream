@@ -35,7 +35,7 @@
  */
 package es.rickyepoderi.wbxml.stream;
 
-import com.sun.org.apache.xerces.internal.util.XMLChar;
+import org.apache.xerces.util.XMLChar;
 import es.rickyepoderi.wbxml.definition.IanaCharset;
 import es.rickyepoderi.wbxml.definition.WbXmlDefinition;
 import es.rickyepoderi.wbxml.definition.WbXmlInitialization;

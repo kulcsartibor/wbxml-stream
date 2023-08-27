@@ -35,7 +35,6 @@
  */
 package es.rickyepoderi.wbxml.document;
 
-import com.sun.org.apache.xerces.internal.util.XMLChar;
 import es.rickyepoderi.wbxml.definition.IanaCharset;
 import es.rickyepoderi.wbxml.definition.WbXmlAttributeDef;
 import es.rickyepoderi.wbxml.definition.WbXmlAttributeValueDef;
@@ -43,6 +42,8 @@ import es.rickyepoderi.wbxml.definition.WbXmlDefinition;
 import es.rickyepoderi.wbxml.definition.WbXmlInitialization;
 import es.rickyepoderi.wbxml.definition.WbXmlTagDef;
 import es.rickyepoderi.wbxml.definition.WbXmlToken;
+import org.apache.xerces.util.XMLChar;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
