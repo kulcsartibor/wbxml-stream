@@ -8,7 +8,7 @@
 
 package es.rickyepoderi.wbxml.bind.si;
 
-import javax.xml.bind.annotation.XmlRegistry;
+import jakarta.xml.bind.annotation.XmlRegistry;
 
 
 /**

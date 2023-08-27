@@ -48,6 +48,8 @@ import es.rickyepoderi.wbxml.document.WbXmlEncoder;
 import es.rickyepoderi.wbxml.document.WbXmlVersion;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
@@ -88,8 +90,6 @@ import javax.xml.stream.XMLStreamWriter;
  * <li>encoding: The encoding to use in the WBXML document.</li>
  * </ul>
  * 
- * TODO: Why about create properties to the parser and reader!!!
- * 
  * @author ricky
  */
 public class WbXmlStreamWriter implements XMLStreamWriter {
@@ -97,7 +97,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Private class that queues the parent elements for processing.
      */
-    private class ElementContext {
+    private static class ElementContext {
         private String namespace;
         private WbXmlElement element;
         private WbXmlNamespaceContext nsctx;
@@ -223,7 +223,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
         this.current.setContext(new WbXmlNamespaceContext());
         this.userctx = null;
         this.doc = null;
-        this.parents = new ArrayDeque<ElementContext>();
+        this.parents = new ArrayDeque<>();
         this.encoded = false;
         this.def = def;
         this.encoderType = encoderType;
@@ -242,7 +242,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      */
     public WbXmlStreamWriter(OutputStream os, WbXmlDefinition def, 
             WbXmlEncoder.StrtblType encoderType, boolean skipSpaces) {
-        this(os, def, encoderType, skipSpaces, "UTF-8", WbXmlVersion.VERSION_1_3);
+        this(os, def, encoderType, skipSpaces, StandardCharsets.UTF_8.name(), WbXmlVersion.VERSION_1_3);
     }
     
     /**
@@ -266,7 +266,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param def The language definition to use
      */
     public WbXmlStreamWriter(OutputStream os, WbXmlDefinition def) {
-        this(os, def, WbXmlEncoder.StrtblType.IF_NEEDED, true, "UTF-8", WbXmlVersion.VERSION_1_3);
+        this(os, def, WbXmlEncoder.StrtblType.IF_NEEDED, true, StandardCharsets.UTF_8.name(), WbXmlVersion.VERSION_1_3);
     }
     
     /**
@@ -275,14 +275,14 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param os The language definition to use
      */
     public WbXmlStreamWriter(OutputStream os) {
-        this(os, null, WbXmlEncoder.StrtblType.IF_NEEDED, true, "UTF-8", WbXmlVersion.VERSION_1_3);
+        this(os, null, WbXmlEncoder.StrtblType.IF_NEEDED, true, StandardCharsets.UTF_8.name(), WbXmlVersion.VERSION_1_3);
     }
 
     // START DOCUMENT
     
     /**
      * Write the XML Declaration. Defaults the WBXML version to 1.3, and the encoding to utf-8
-     * @throws XMLStreamException 
+     * @throws XMLStreamException  Thrown when XML cannot be serialised
      */
     @Override
     public void writeStartDocument() throws XMLStreamException {
@@ -294,7 +294,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Write the XML Declaration. Defaults the WBXML to 1.3 (other versions
      * not supported)
      * @param version version of the xml document
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeStartDocument(String version) throws XMLStreamException {
@@ -330,7 +330,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * new scope in the internal namespace context. Writing the corresponding 
      * EndElement causes the scope to be closed
      * @param localName local name of the tag, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeStartElement(String localName) throws XMLStreamException {
@@ -341,7 +341,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Writes a start tag to the output
      * @param namespaceURI the namespaceURI of the prefix to use, may not be null
      * @param localName local name of the tag, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeStartElement(String namespaceURI, String localName) throws XMLStreamException {
@@ -360,7 +360,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param prefix local name of the tag, may not be null
      * @param localName the prefix of the tag, may not be null
      * @param namespaceURI the uri to bind the prefix to, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeStartElement(String prefix, String localName, String namespaceURI) throws XMLStreamException {
@@ -393,7 +393,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
         }
         // create the tag always prefix:localName
         if (prefix != null && !prefix.isEmpty()) {
-            localName = new StringBuilder(prefix).append(":").append(localName).toString();
+            localName = prefix + ":" + localName;
         }
         // create a new current element with this tag
         current.setElement(new WbXmlElement(localName));
@@ -413,7 +413,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Writes an empty element tag to the output
      * @param localName local name of the tag, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeEmptyElement(String localName) throws XMLStreamException {
@@ -425,7 +425,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Writes an empty element tag to the output
      * @param namespaceURI the uri to bind the tag to, may not be null
      * @param localName local name of the tag, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeEmptyElement(String namespaceURI, String localName) throws XMLStreamException {
@@ -438,7 +438,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param prefix the prefix of the tag, may not be null
      * @param localName local name of the tag, may not be null
      * @param namespaceURI the uri to bind the tag to, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeEmptyElement(String prefix, String localName, String namespaceURI) throws XMLStreamException {
@@ -480,7 +480,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
             }
         }
         if (prefix != null && !prefix.isEmpty()) {
-            localName = new StringBuilder(prefix).append(":").append(localName).toString();
+            localName = prefix + ":" + localName;
         }
         // set the proper tag name
         current.getElement().setTag(localName);
@@ -497,7 +497,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * writer to determine the prefix and local name of the event. In the
      * current implementation it completes the current element with proper
      * prefix and localName (cos now all the namespaces are correctly set).
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeEndElement() throws XMLStreamException {
@@ -522,7 +522,6 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
         // encode the resulting document
         try {
             WbXmlEncoder encoder = new WbXmlEncoder(stream, doc, encoderType);
-            //System.err.println(doc);
             encoder.encode();
             encoded = true;
         } catch (IOException e) {
@@ -533,7 +532,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Close this writer and free any resources associated with the writer. 
      * This must not close the underlying output stream.
-     * @throws XMLStreamException 
+     * @throws XMLStreamException  Thrown when XML cannot be serialised
      */
     @Override
     public void close() throws XMLStreamException {
@@ -548,7 +547,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Write any cached data to the underlying output mechanism. The method
      * only flush the real stream if encoded.
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void flush() throws XMLStreamException {
@@ -566,7 +565,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Writes an attribute to the output stream without a prefix
      * @param localName the local name of the attribute
      * @param value the value of the attribute
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeAttribute(String localName, String value) throws XMLStreamException {
@@ -578,7 +577,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param namespaceURI the uri of the prefix for this attribute
      * @param localName the local name of the attribute
      * @param value the value of the attribute
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeAttribute(String namespaceURI, String localName, String value) throws XMLStreamException {
@@ -594,7 +593,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * @param namespaceURI the uri of the prefix for this attribute
      * @param localName the local name of the attribute
      * @param value the value of the attribute
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeAttribute(String prefix, String namespaceURI, String localName, String value) throws XMLStreamException {
@@ -624,7 +623,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
             }
         }
         if (prefix != null && !prefix.isEmpty()) {
-            localName = new StringBuilder(prefix).append(":").append(localName).toString();
+            localName = prefix + ":" + localName;
         }
         // add an atribute to the current element
         if (current.getElement() == null) {
@@ -640,13 +639,12 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * of the current element is updated to the one passed.
      * @param prefix the prefix to bind this namespace to
      * @param namespaceURI the uri to bind the prefix to
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeNamespace(String prefix, String namespaceURI) throws XMLStreamException {
         log.log(Level.FINE, "writeNamespace({0}, {1})", new Object[]{prefix, namespaceURI});
         if (namespaceURI == null || namespaceURI.isEmpty()) {
-            //throw new XMLStreamException("namespaceURI cannot be null!");
             return;
         }
         if (prefix == null || prefix.isEmpty() || prefix.equals(XMLConstants.XMLNS_ATTRIBUTE)) {
@@ -669,7 +667,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Writes the default namespace to the stream.
      * @param namespaceURI the uri to bind the default namespace to
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeDefaultNamespace(String namespaceURI) throws XMLStreamException {
@@ -681,7 +679,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Writes an xml comment with the data enclosed. Nothing is done cos WBXML 
      * does not use comments.
      * @param data the data contained in the comment, may be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeComment(String data) throws XMLStreamException {
@@ -693,7 +691,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * Writes a processing instruction.
      * NOTE: Not implemented, throws an exception
      * @param target the target of the processing instruction, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeProcessingInstruction(String target) throws XMLStreamException {
@@ -705,7 +703,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * NOTE: Not implemented, throws an exception
      * @param target the target of the processing instruction, may not be null
      * @param data the data contained in the processing instruction, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeProcessingInstruction(String target, String data) throws XMLStreamException {
@@ -715,7 +713,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
     /**
      * Writes a CData section. In delegates to writeCharsInternal.
      * @param data the data contained in the CData Section, may not be null
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeCData(String data) throws XMLStreamException {
@@ -729,7 +727,7 @@ public class WbXmlStreamWriter implements XMLStreamWriter {
      * just it is used to guess the language definition if it was not passed
      * in the constructor.
      * @param dtd the DTD to be written
-     * @throws XMLStreamException 
+     * @throws XMLStreamException Thrown when XML cannot be serialised
      */
     @Override
     public void writeDTD(String dtd) throws XMLStreamException {

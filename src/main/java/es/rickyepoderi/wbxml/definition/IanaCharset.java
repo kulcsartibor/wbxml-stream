@@ -1,38 +1,3 @@
-/*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *    
- * Linking this library statically or dynamically with other modules 
- * is making a combined work based on this library. Thus, the terms and
- * conditions of the GNU General Public License cover the whole
- * combination.
- *    
- * As a special exception, the copyright holders of this library give 
- * you permission to link this library with independent modules to 
- * produce an executable, regardless of the license terms of these 
- * independent modules, and to copy and distribute the resulting 
- * executable under terms of your choice, provided that you also meet, 
- * for each linked independent module, the terms and conditions of the 
- * license of that module.  An independent module is a module which 
- * is not derived from or based on this library.  If you modify this 
- * library, you may extend this exception to your version of the 
- * library, but you are not obligated to do so.  If you do not wish 
- * to do so, delete this exception statement from your version.
- *
- * Project: github.com/rickyepoderi/wbxml-stream
- * 
- */
 package es.rickyepoderi.wbxml.definition;
 
 import java.nio.charset.Charset;
@@ -57,7 +22,7 @@ import java.util.logging.Logger;
  * <p>Not all the charsets are defined here but the idea is simple, just add 
  * the ones you need. ;-)</p>
  *
- * @author ricky
+ * @author Dr. Tibor Kulcsar
  */
 public enum IanaCharset {
     UNKNOWN("UNKNOWN", 0, new String[] {}),
@@ -72,31 +37,31 @@ public enum IanaCharset {
     ISO_8859_8_1988("ISO_8859-8:1988", 11L, new String[] {"ISO-8859-8", "iso-ir-138", "ISO_8859-8", "hebrew", "csISOLatinHebrew"}),
     ISO_8859_9_1989("ISO_8859-9:1989", 12L, new String[]{"ISO-8859-9", "iso-ir-148", "ISO_8859-9", "latin5", "l5", "csISOLatin5"}),
     ISO_8859_10("ISO-8859-10", 13L, new String[]{"iso-ir-157", "l6", "ISO_8859-10:1992", "csISOLatin6", "latin6"}),
-    Shift_JIS("Shift_JIS", 17L, new String[] {"MS_Kanji", "csShiftJIS"}),
+    SHIFT_JIS("Shift_JIS", 17L, new String[] {"MS_Kanji", "csShiftJIS"}),
     UTF_8("UTF-8", 106L, new String[] {}),
-    Big5("Big5", 2026L, new String[] {"csBig5"}),
+    BIG5("Big5", 2026L, new String[] {"csBig5"}),
     ISO_10646_UCS_2("ISO-10646-UCS-2", 1000L, new String[] {"csUnicode"}),
     UTF_16("UTF-16", 1015L, new String[] {});
     
     /**
      * Logger for the class
      */
-    protected static final Logger log = Logger.getLogger(IanaCharset.class.getName());
+    private static final Logger log = Logger.getLogger(IanaCharset.class.getName());
     
     /**
      * Name of the charset.
      */
-    private String name = null;
+    private final String name;
     
     /**
      * mib identifier of the IANA charset.
      */
-    private long mibEnum = 0L;
+    private final long mibEnum;
     
     /**
      * Alias of the charset.
      */
-    private String[] alias;
+    private final String[] alias;
     
     /**
      * Java equivalent charset if defined (it defaults to ASCII).
@@ -106,12 +71,12 @@ public enum IanaCharset {
     /**
      * static map to search a charset using the name or alias.
      */
-    static private final Map<String, IanaCharset> charsetAliasMap = new HashMap<String, IanaCharset>();
+    static final Map<String, IanaCharset> charsetAliasMap = new HashMap<>();
     
     /**
      * static map to search the charset using the mib identifier.
      */
-    static private final Map<Long, IanaCharset> charsetMibMap = new HashMap<Long, IanaCharset>();
+    static final Map<Long, IanaCharset> charsetMibMap = new HashMap<>();
     
     /**
      * Provate method for the enumeration.
@@ -119,7 +84,7 @@ public enum IanaCharset {
      * @param mibEnum The mib identifier
      * @param alias The list of alias names
      */
-    private IanaCharset(String name, long mibEnum, String[] alias) {
+    IanaCharset(String name, long mibEnum, String[] alias) {
         this.name = name;
         this.mibEnum = mibEnum;
         this.alias = alias;
@@ -155,7 +120,7 @@ public enum IanaCharset {
      * @param alias The name or the alias of the charset to retrieve.
      * @return The associated charset or UNKNOWN.
      */
-    static public IanaCharset getIanaCharset(String alias) {
+    public static IanaCharset getIanaCharset(String alias) {
         IanaCharset charset = charsetAliasMap.get(alias.toUpperCase());
         if (charset == null) {
             charset = UNKNOWN;
@@ -168,7 +133,7 @@ public enum IanaCharset {
      * @param mib The MIB identifier of teh charset
      * @return The charset associated to this mIB or UNKNOWN
      */
-    static public IanaCharset getIanaCharset(long mib) {
+    public static IanaCharset getIanaCharset(long mib) {
         IanaCharset charset = charsetMibMap.get(mib);
         if (charset == null) {
             charset = UNKNOWN;
@@ -182,7 +147,7 @@ public enum IanaCharset {
      * @param name The name of the charset
      * @return The Java charset or null
      */
-    static protected Charset getCharsetName(String name) {
+    private static Charset getCharsetName(String name) {
         try {
             return Charset.forName(name);
         } catch (Exception e) {
