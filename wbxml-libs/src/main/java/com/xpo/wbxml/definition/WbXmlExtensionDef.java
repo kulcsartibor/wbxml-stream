@@ -35,7 +35,7 @@
  */
 package com.xpo.wbxml.definition;
 
-import es.rickyepoderi.wbxml.document.WbXmlLiterals;
+import com.xpo.wbxml.document.WbXmlLiterals;
 
 /**
  * <p>A extension in the WBXML specification is any string that can be

@@ -35,7 +35,7 @@
  */
 package com.xpo.wbxml.definition;
 
-import es.rickyepoderi.wbxml.document.WbXmlLiterals;
+import com.xpo.wbxml.document.WbXmlLiterals;
 
 /**
  *

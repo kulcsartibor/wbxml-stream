@@ -35,8 +35,8 @@
  */
 package com.xpo.wbxml.definition;
 
-import es.rickyepoderi.wbxml.document.OpaqueAttributePlugin;
-import es.rickyepoderi.wbxml.document.OpaqueContentPlugin;
+import com.xpo.wbxml.document.OpaqueAttributePlugin;
+import com.xpo.wbxml.document.OpaqueContentPlugin;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,9 +45,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import es.rickyepoderi.wbxml.document.ExtensionIPlugin;
-import es.rickyepoderi.wbxml.document.ExtensionTPlugin;
-import es.rickyepoderi.wbxml.document.ExtensionPlugin;
+import com.xpo.wbxml.document.ExtensionIPlugin;
+import com.xpo.wbxml.document.ExtensionTPlugin;
+import com.xpo.wbxml.document.ExtensionPlugin;
 
 /**
  *

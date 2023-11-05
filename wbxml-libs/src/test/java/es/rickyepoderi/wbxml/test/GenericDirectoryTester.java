@@ -36,10 +36,10 @@
 package es.rickyepoderi.wbxml.test;
 
 import com.xpo.wbxml.definition.WbXmlDefinition;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder;
-import es.rickyepoderi.wbxml.document.WbXmlVersion;
-import es.rickyepoderi.wbxml.stream.WbXmlInputFactory;
-import es.rickyepoderi.wbxml.stream.WbXmlOutputFactory;
+import com.xpo.wbxml.document.WbXmlEncoder;
+import com.xpo.wbxml.document.WbXmlVersion;
+import com.xpo.wbxml.stream.WbXmlInputFactory;
+import com.xpo.wbxml.stream.WbXmlOutputFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -78,7 +78,7 @@ import org.w3c.dom.Document;
 /**
  * @author ricky
  */
-public class GenericDirectoryTester {
+public abstract class GenericDirectoryTester {
 
     private String directory = null;
     protected WbXmlDefinition def = null;

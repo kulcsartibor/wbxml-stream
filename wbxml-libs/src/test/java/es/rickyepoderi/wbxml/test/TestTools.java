@@ -1,7 +1,7 @@
 package es.rickyepoderi.wbxml.test;
 
 
-import es.rickyepoderi.wbxml.stream.WbXmlEventReader;
+import com.xpo.wbxml.stream.WbXmlEventReader;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

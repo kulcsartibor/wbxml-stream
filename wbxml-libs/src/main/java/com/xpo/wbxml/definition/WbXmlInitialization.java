@@ -35,8 +35,8 @@
  */
 package com.xpo.wbxml.definition;
 
-import es.rickyepoderi.wbxml.document.OpaqueAttributePlugin;
-import es.rickyepoderi.wbxml.document.OpaqueContentPlugin;
+import com.xpo.wbxml.document.OpaqueAttributePlugin;
+import com.xpo.wbxml.document.OpaqueContentPlugin;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -51,9 +51,9 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import es.rickyepoderi.wbxml.document.ExtensionIPlugin;
-import es.rickyepoderi.wbxml.document.ExtensionTPlugin;
-import es.rickyepoderi.wbxml.document.ExtensionPlugin;
+import com.xpo.wbxml.document.ExtensionIPlugin;
+import com.xpo.wbxml.document.ExtensionTPlugin;
+import com.xpo.wbxml.document.ExtensionPlugin;
 
 /**
  * <p>The initialization class is a way to load into the JVM all the language
@@ -81,7 +81,10 @@ import es.rickyepoderi.wbxml.document.ExtensionPlugin;
  * @author ricky
  */
 public class WbXmlInitialization {
-    
+
+    private WbXmlInitialization() {
+    }
+
     /**
      * Logger for the class.
      */
@@ -95,22 +98,22 @@ public class WbXmlInitialization {
      * The system property name for changing default classpath location
      * of the language definition properties file,
      */
-    static public final String RESOURCE_DIRECTORY_PROPERTY = "es.rickyepoderi.wbxml.definition.path";
+    public static final String RESOURCE_DIRECTORY_PROPERTY = "es.rickyepoderi.wbxml.definition.path";
     
     /**
      * Default location for language definitions.
      */
-    static public final String DEFAULT_RESOURCE_DIRECTORY = "es/rickyepoderi/wbxml/definition/defaults";
+    public static final String DEFAULT_RESOURCE_DIRECTORY = "es/rickyepoderi/wbxml/definition/defaults";
     
     /**
      * Suffix for the properties file of definitions.
      */
-    static public final String PROPERTIES_SUFFIX = ".properties";
+    public static final String PROPERTIES_SUFFIX = ".properties";
     
     /**
      * Prefix for the properties file odf definitions.
      */
-    static public final String PROPERTIES_PREFIX = "wbxml.";
+    public static final String PROPERTIES_PREFIX = "wbxml.";
 
     //
     // Name for keys inside the property file
@@ -119,13 +122,13 @@ public class WbXmlInitialization {
     /**
      * Name for the property that has the language name. It is compulsory.
      */
-    static public final String PROP_WBXML_NAME = "wbxml.name";
+    public static final String PROP_WBXML_NAME = "wbxml.name";
     
     /**
      * Name for the property that has the publid id of the definition. It should
      * be 0x01 (unknown) if the definitions has no standard name.
      */
-    static public final String PROP_WBXML_PUBLIC_ID = "wbxml.publicid";
+    public static final String PROP_WBXML_PUBLIC_ID = "wbxml.publicid";
     
     /**
      * Name for the property that has the FPI of the definition. It can
@@ -133,13 +136,13 @@ public class WbXmlInitialization {
      * recognition of the language can be impossible and parsing/decoding 
      * needs direct specification of the definition language to use.
      */
-    static public final String PROP_WBXML_XML_PUBLIC_IDENTIFIER =  "wbxml.xmlpublicidentifier";
+    public static final String PROP_WBXML_XML_PUBLIC_IDENTIFIER =  "wbxml.xmlpublicidentifier";
     
     /**
      * Name for the property that has the URI for dtd files of the definition.
      * It can be null.
      */
-    static public final String PROP_WBXML_XML_URI_REFERENCE =  "wbxml.xmlurireference";
+    public static final String PROP_WBXML_XML_URI_REFERENCE =  "wbxml.xmlurireference";
     
     /**
      * Name for the property that specifies the root element of the language.
@@ -147,7 +150,7 @@ public class WbXmlInitialization {
      * root element just put the most common one). This should be prefixed if
      * namespaces are used.
      */
-    static public final String PROP_WBXML_ROOT_ELEMENT =  "wbxml.rootelement";
+    public static final String PROP_WBXML_ROOT_ELEMENT =  "wbxml.rootelement";
     
     /**
      * The name for the property that specifies the JAXB class for the root element.
@@ -155,7 +158,7 @@ public class WbXmlInitialization {
      * inside the library. In the test part there are some of them just for testing
      * purposes.
      */
-    static public final String PROP_WBXML_CLASS_ELEMENT =  "wbxml.class";
+    public static final String PROP_WBXML_CLASS_ELEMENT =  "wbxml.class";
     
     /**
      * Prefix for properties that handle the language tags. The tags are in the
@@ -165,7 +168,7 @@ public class WbXmlInitialization {
      * wbxml.tag.{pageCode}.[{prefix}:]{name}={token}
      * </pre>
      */
-    static public final String PROP_WBXML_TAG_PREFIX = "wbxml.tag.";
+    public static final String PROP_WBXML_TAG_PREFIX = "wbxml.tag.";
     
     /**
      * Prefix for properties that defines the namespaces used in the 
@@ -177,7 +180,7 @@ public class WbXmlInitialization {
      * wbxml.namespaces.{prefix}={namespaceURI}
      * </pre>
      */
-    static public final String PROP_WBXML_NAMESPACE_PREFIX = "wbxml.namespaces.";
+    public static final String PROP_WBXML_NAMESPACE_PREFIX = "wbxml.namespaces.";
     
     /**
      * Prefix for properties that handle the language attributes. The attributes
@@ -190,7 +193,7 @@ public class WbXmlInitialization {
      * {previous-key}.value={optional-value}
      * </pre>
      */
-    static public final String PROP_WBXML_ATTR_PREFIX = "wbxml.attr.";
+    public static final String PROP_WBXML_ATTR_PREFIX = "wbxml.attr.";
     
     /**
      * Prefix for properties that handle attribute values. The values are
@@ -203,7 +206,7 @@ public class WbXmlInitialization {
      * {previous_key}.value={value}
      * </pre>
      */
-    static public final String PROP_WBXML_ATTR_VALUE_PREFIX = "wbxml.attrvalue.";
+    public static final String PROP_WBXML_ATTR_VALUE_PREFIX = "wbxml.attrvalue.";
     
     /**
      * Prefix for properties that handle extensions in the language. Extensions
@@ -215,14 +218,14 @@ public class WbXmlInitialization {
      * {previous_key}.value={value}
      * </pre>
      */
-    static public final String PROP_WBXML_EXT_PREFIX = "wbxml.ext.";
+    public static final String PROP_WBXML_EXT_PREFIX = "wbxml.ext.";
     
     /**
      * Prefix used for opaques for attribute values. The opaque is a weird
      * way of encoding any special value in a wbxml file. In this case the
      * opaque will pase/encode special attribute values.
      */
-    static public final String PROP_WBXML_OPAQUE_ATTR_PREFIX = "wbxml.opaque.attr.";
+    public static final String PROP_WBXML_OPAQUE_ATTR_PREFIX = "wbxml.opaque.attr.";
     
     /**
      * Prefix used for opaques that are used for tags. The opaque is a weird
@@ -233,13 +236,13 @@ public class WbXmlInitialization {
      * webxml.opaque.attr.{pageCode}.{name}={class}
      * </pre>
      */
-    static public final String PROP_WBXML_OPAQUE_TAG_PREFIX = "wbxml.opaque.tag.";
+    public static final String PROP_WBXML_OPAQUE_TAG_PREFIX = "wbxml.opaque.tag.";
     
     /**
      * The suffix use when a second property is needed (attributes, extensions
      * and so on).
      */
-    static public final String PROP_WBXML_VALUE_SUFFIX = ".value";
+    public static final String PROP_WBXML_VALUE_SUFFIX = ".value";
     
     /**
      * Prefix used for properties that has the linked definitions. Linked 
@@ -251,7 +254,7 @@ public class WbXmlInitialization {
      * wbxml.opaque.linkeddef.{differenciator}={language_name}
      * </pre>
      */
-    static public final String PROP_WBXML_LINKED_DEF = "wbxml.opaque.linkeddef.";
+    public static final String PROP_WBXML_LINKED_DEF = "wbxml.opaque.linkeddef.";
     
     /**
      * Name of the property to set a specific plugin for extensions EXT.
@@ -260,7 +263,7 @@ public class WbXmlInitialization {
      * wbxml.extension.EXT={class}
      * </pre>
      */
-    static public final String PROP_WBXML_EXTENSION = "wbxml.extension.EXT";
+    public static final String PROP_WBXML_EXTENSION = "wbxml.extension.EXT";
     
     /**
      * Name of the property to set a specific plugin for extensions EXT_I.
@@ -269,7 +272,7 @@ public class WbXmlInitialization {
      * wbxml.extension.EXT_I={class}
      * </pre>
      */
-    static public final String PROP_WBXML_EXTENSION_I = "wbxml.extension.EXT_I";
+    public static final String PROP_WBXML_EXTENSION_I = "wbxml.extension.EXT_I";
     
     /**
      * Name of the property to set a specific plugin for extensions EXT_T.
@@ -278,12 +281,12 @@ public class WbXmlInitialization {
      * wbxml.extension.EXT_T={class}
      * </pre>
      */
-    static public final String PROP_WBXML_EXTENSION_T = "wbxml.extension.EXT_T";
+    public static final String PROP_WBXML_EXTENSION_T = "wbxml.extension.EXT_T";
     
     /**
      * Static list of definitions that are loaded at initialization of this class.
      */
-    static private List<WbXmlDefinition> definitions = null;
+    private static final List<WbXmlDefinition> definitions;
     
     //
     // Private method to load and parse the files
@@ -295,7 +298,7 @@ public class WbXmlInitialization {
      * @param value The value (the token)
      * @return The WbXxmlTagDef that this property represents
      */
-    static private WbXmlTagDef getTagDefinition(String key, String value) {
+    private static WbXmlTagDef getTagDefinition(String key, String value) {
         try {
             // the line is "wbxml.tag.<pageCode>.[<prefix>:]<name>=<token>"
             String[] keys = key.split(Pattern.quote("."));
@@ -322,13 +325,12 @@ public class WbXmlInitialization {
      * @param value The value for the namespace (the namespaceURI)
      * @return The WbXmlNamespaceDef that this property represents
      */
-    static private WbXmlNamespaceDef getNamespaceDefinition(String key, String value) {
+    private static WbXmlNamespaceDef getNamespaceDefinition(String key, String value) {
         try {
             // the line is "wbxml.namespaces.<prefix>=<namespace>"
             String[] keys = key.split(Pattern.quote("."));
             String prefix = keys[2];
-            String namespace = value;
-            return new WbXmlNamespaceDef(prefix, namespace);
+            return new WbXmlNamespaceDef(prefix, value);
         } catch (Exception e) {
             log.log(Level.SEVERE, "Error loading attribute {0}={1}", new Object[]{key, value});
             log.log(Level.SEVERE, "Exception",  e);
@@ -345,7 +347,7 @@ public class WbXmlInitialization {
      * @param value The value of the key (the token)
      * @return The WbXmlAttributeDef that this property represents
      */
-    static private WbXmlAttributeDef getAttrDefinition(Properties props, String key, String value) {
+    private static WbXmlAttributeDef getAttrDefinition(Properties props, String key, String value) {
         try {
             // two possible lines
             // compulsory line: wbxml.attr.<pageCode>.[<prefix>:]<name>[.<optional>]=<token>
@@ -378,7 +380,7 @@ public class WbXmlInitialization {
      * @param value The value of the key (the token)
      * @return The WbXmlAttributeValueDef that this property represents
      */
-    static private WbXmlAttributeValueDef getAttrValueDefinition(Properties props, String key, String value) {
+    private static WbXmlAttributeValueDef getAttrValueDefinition(Properties props, String key, String value) {
         try {
             // two possible lines
             // compulsory line: wbxml.attrvalue.<pageCode>[.<optional>]=<token>
@@ -404,7 +406,7 @@ public class WbXmlInitialization {
      * @param value The value of the key (the token)
      * @return The WbXmlExtensionDef that this property represents
      */
-    static private WbXmlExtensionDef getExtDefinition(Properties props, String key, String value) {
+    private static WbXmlExtensionDef getExtDefinition(Properties props, String key, String value) {
         try {
             // two possible lines
             // compulsory line: wbxml.ext.<key_differenciator>=<token>
@@ -426,7 +428,7 @@ public class WbXmlInitialization {
      * @param key The property key for the opaque attr
      * @param value The value (class) of the property
      */
-    static private void addOpaqueAttrPlugin(WbXmlDefinition def, Properties props, String key, String value) {
+    private static void addOpaqueAttrPlugin(WbXmlDefinition def, Properties props, String key, String value) {
         try {
             // the line is: webxml.opaque.attr.<pageCode>.<name>=<class>
             String[] keys = key.split(Pattern.quote("."));
@@ -437,7 +439,7 @@ public class WbXmlInitialization {
                     .append(".")
                     .append(name).toString();
             WbXmlAttributeDef attrDef = getAttrDefinition(props, tagProp, props.getProperty(tagProp));
-            Class clazz = Class.forName(value);
+            Class<?> clazz = Class.forName(value);
             OpaqueAttributePlugin plugin = (OpaqueAttributePlugin) clazz.newInstance();
             def.addOpaqueAttr(attrDef, plugin);
         } catch (Exception e) {
@@ -453,7 +455,7 @@ public class WbXmlInitialization {
      * @param key The property key for the opaque tag
      * @param value The value (class) of the property
      */
-    static private void addOpaqueTagPlugin(WbXmlDefinition def, Properties props, String key, String value) {
+    private static void addOpaqueTagPlugin(WbXmlDefinition def, Properties props, String key, String value) {
         try {
             // the line is: webxml.opaque.tag.<pageCode>.<name>=<class>
             String[] keys = key.split(Pattern.quote("."));
@@ -478,15 +480,15 @@ public class WbXmlInitialization {
      * @param def The definition to add the opaque to
      * @param props The properties to search the tag the opaque is used to
      */
-    static private void setExtension(WbXmlDefinition def, Properties props) {
+    private static void setExtension(WbXmlDefinition def, Properties props) {
         String value = props.getProperty(PROP_WBXML_EXTENSION);
         if (value != null) {
             try {
-                Class clazz = Class.forName(value);
+                Class<?> clazz = Class.forName(value);
                 ExtensionPlugin plugin = (ExtensionPlugin) clazz.newInstance();
                 def.setExtension(plugin);
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Error loading extension plugin {1}", value);
+                log.log(Level.SEVERE, "Error loading extension plugin {0}", value);
                 log.log(Level.SEVERE, "Exception", e);
             }
         }
@@ -497,15 +499,15 @@ public class WbXmlInitialization {
      * @param def The definition to add the opaque to
      * @param props The properties to search the tag the opaque is used to
      */
-    static private void setExtensionI(WbXmlDefinition def, Properties props) {
+    private static void setExtensionI(WbXmlDefinition def, Properties props) {
         String value = props.getProperty(PROP_WBXML_EXTENSION_I);
         if (value != null) {
             try {
-                Class clazz = Class.forName(value);
+                Class<?> clazz = Class.forName(value);
                 ExtensionIPlugin plugin = (ExtensionIPlugin) clazz.newInstance();
                 def.setExtensionI(plugin);
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Error loading extension plugin {1}", value);
+                log.log(Level.SEVERE, "Error loading extension plugin {0}", value);
                 log.log(Level.SEVERE, "Exception", e);
             }
         }
@@ -516,15 +518,15 @@ public class WbXmlInitialization {
      * @param def The definition to add the opaque to
      * @param props The properties to search the tag the opaque is used to
      */
-    static private void setExtensionT(WbXmlDefinition def, Properties props) {
+    private static void setExtensionT(WbXmlDefinition def, Properties props) {
         String value = props.getProperty(PROP_WBXML_EXTENSION_T);
         if (value != null) {
             try {
-                Class clazz = Class.forName(value);
+                Class<?> clazz = Class.forName(value);
                 ExtensionTPlugin plugin = (ExtensionTPlugin) clazz.newInstance();
                 def.setExtensionT(plugin);
             } catch (Exception e) {
-                log.log(Level.SEVERE, "Error loading extension plugin {1}", value);
+                log.log(Level.SEVERE, "Error loading extension plugin {0}", value);
                 log.log(Level.SEVERE, "Exception", e);
             }
         }
@@ -538,7 +540,7 @@ public class WbXmlInitialization {
      * @param def The definition which is being processed
      * @param value The name of the linked definition
      */
-    static private void addLinkedDefinition(WbXmlDefinition def, String value) {
+    private static void addLinkedDefinition(WbXmlDefinition def, String value) {
         // just add the definition name 
         // at the end the real definiion will be added
         def.getLinkedDefinitions().put(value, null);
@@ -550,7 +552,7 @@ public class WbXmlInitialization {
      * @param props The properties of the definition file
      * @return The WbXmlDefinition loaded (linked part is not completely done)
      */
-    static private WbXmlDefinition loadDefinition(Properties props) {
+    private static WbXmlDefinition loadDefinition(Properties props) {
         // read the main parameters for the definition
         String name = props.getProperty(PROP_WBXML_NAME);
         long publicId = Long.decode(props.getProperty(PROP_WBXML_PUBLIC_ID));
@@ -611,7 +613,7 @@ public class WbXmlInitialization {
      * @param resource The url resource that contains the JAR
      * @param path The path defined to contain the definitions
      */
-    static private void loadPropertiesJar(URL resource, String path) {
+    private static void loadPropertiesJar(URL resource, String path) {
         JarURLConnection jarConn;
         JarFile jar = null;
         try {
@@ -645,7 +647,7 @@ public class WbXmlInitialization {
      * container. 
      * @param file The directory that contains the definitions 
      */
-    static private void loadPropertiesFile(File file) {
+    private static void loadPropertiesFile(File file) {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (File f : files) {
@@ -678,7 +680,7 @@ public class WbXmlInitialization {
      * This method iterates all the definitions and, in case linked definitions
      * are defined, the real definition is placed in there.
      */
-    static private void processLinkedDefinitions() {
+    private static void processLinkedDefinitions() {
         for (WbXmlDefinition def: getDefinitions()) {
             if (!def.getLinkedDefinitions().isEmpty()) {
                 // iterate over the definitions and add the real one
@@ -703,7 +705,7 @@ public class WbXmlInitialization {
      * definition languages. The property files can be placed in the classpath
      * (using a JAR file or a common directory).
      */
-    static private void init() {
+    private static void init() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String resourcePath = System.getProperty(RESOURCE_DIRECTORY_PROPERTY);
         if (resourcePath == null) {
@@ -737,7 +739,7 @@ public class WbXmlInitialization {
      * Method that returns all the definitions in the system.
      * @return The list of definitions
      */
-    static synchronized public WbXmlDefinition[] getDefinitions() {
+    public static synchronized WbXmlDefinition[] getDefinitions() {
         return definitions.toArray(new WbXmlDefinition[0]);
     }
     
@@ -746,7 +748,7 @@ public class WbXmlInitialization {
      * @param fpi The FPI of the language
      * @return The definition for that language or null
      */
-    static synchronized public WbXmlDefinition getDefinitionByFPI(String fpi) {
+    public static synchronized WbXmlDefinition getDefinitionByFPI(String fpi) {
         for (WbXmlDefinition def: definitions) {
             if (def.getXmlPublicId() != null && def.getXmlPublicId().equals(fpi)) {
                 return def;
@@ -760,7 +762,7 @@ public class WbXmlInitialization {
      * @param id The public id of the language
      * @return The definition for that language or null
      */
-    static synchronized public WbXmlDefinition getDefinitionByPublicId(long id) {
+    public static synchronized WbXmlDefinition getDefinitionByPublicId(long id) {
         for (WbXmlDefinition def: definitions) {
             if (def.getPublicId() == id) {
                 return def;
@@ -774,7 +776,7 @@ public class WbXmlInitialization {
      * @param name The name of the language
      * @return The definition for that language or null
      */
-    static synchronized public WbXmlDefinition getDefinitionByName(String name) {
+    public static synchronized WbXmlDefinition getDefinitionByName(String name) {
         for (WbXmlDefinition def: definitions) {
             if (def.getName() != null && def.getName().equals(name)) {
                 return def;
@@ -789,7 +791,7 @@ public class WbXmlInitialization {
      * @param namespaceUri The namespace of the root element
      * @return The definition for that language or null
      */
-    static synchronized public WbXmlDefinition getDefinitionByRoot(String root, String namespaceUri) {
+    public static synchronized WbXmlDefinition getDefinitionByRoot(String root, String namespaceUri) {
         for (WbXmlDefinition def : definitions) {
             if (namespaceUri != null && !namespaceUri.isEmpty()) {
                 // get the prefix for this namespace
@@ -808,7 +810,7 @@ public class WbXmlInitialization {
     /**
      * Method that reloads the definitions using normal processing.
      */
-    static synchronized public void reload() {
+    public static synchronized void reload() {
         definitions.clear();
         init();
     }
@@ -818,7 +820,7 @@ public class WbXmlInitialization {
      * definitions.
      * @param props The properties file of the definition
      */
-    static synchronized public void addDefinition(Properties props) {
+    public static synchronized void addDefinition(Properties props) {
         String name = props.getProperty(PROP_WBXML_NAME);
         if (name == null) {
             throw new NullPointerException("The specification should have a name");
@@ -835,7 +837,7 @@ public class WbXmlInitialization {
     //
     
     static {
-        definitions = new ArrayList<WbXmlDefinition>();
+        definitions = new ArrayList<>();
         init();
     }
 }

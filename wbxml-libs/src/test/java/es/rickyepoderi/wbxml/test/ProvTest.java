@@ -37,9 +37,9 @@ package es.rickyepoderi.wbxml.test;
 
 import com.google.common.io.CharSource;
 import com.xpo.wbxml.definition.WbXmlInitialization;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder.StrtblType;
-import es.rickyepoderi.wbxml.document.WbXmlVersion;
+import com.xpo.wbxml.document.WbXmlEncoder;
+import com.xpo.wbxml.document.WbXmlEncoder.StrtblType;
+import com.xpo.wbxml.document.WbXmlVersion;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 

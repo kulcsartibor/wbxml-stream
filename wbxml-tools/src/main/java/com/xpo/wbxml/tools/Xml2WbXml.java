@@ -37,9 +37,9 @@ package com.xpo.wbxml.tools;
 
 import com.xpo.wbxml.definition.WbXmlDefinition;
 import com.xpo.wbxml.definition.WbXmlInitialization;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder;
-import es.rickyepoderi.wbxml.document.WbXmlVersion;
-import es.rickyepoderi.wbxml.stream.WbXmlOutputFactory;
+import com.xpo.wbxml.document.WbXmlEncoder;
+import com.xpo.wbxml.document.WbXmlVersion;
+import com.xpo.wbxml.stream.WbXmlOutputFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

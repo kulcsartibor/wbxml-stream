@@ -37,10 +37,10 @@ package com.xpo.wbxml.tools;
 
 import com.xpo.wbxml.definition.WbXmlDefinition;
 import com.xpo.wbxml.definition.WbXmlInitialization;
-import es.rickyepoderi.wbxml.document.WbXmlParser;
-import es.rickyepoderi.wbxml.stream.WbXmlEventReader;
-import es.rickyepoderi.wbxml.stream.WbXmlInputFactory;
-import es.rickyepoderi.wbxml.stream.WbXmlStreamReader;
+import com.xpo.wbxml.document.WbXmlParser;
+import com.xpo.wbxml.stream.WbXmlEventReader;
+import com.xpo.wbxml.stream.WbXmlInputFactory;
+import com.xpo.wbxml.stream.WbXmlStreamReader;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;

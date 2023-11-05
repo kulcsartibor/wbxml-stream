@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    java
     `maven-publish`
 }
 
@@ -28,6 +29,8 @@ description = "wbxml-libs"
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
+
+
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
@@ -44,4 +47,8 @@ tasks.withType<Javadoc>() {
 
 tasks.named<Test>("test") {
     useTestNG()
+}
+
+tasks.withType<Jar>(){
+    from(configurations.compileClasspath)
 }

@@ -37,8 +37,8 @@ package es.rickyepoderi.wbxml.test;
 
 import com.xpo.wbxml.definition.WbXmlDefinition;
 import com.xpo.wbxml.definition.WbXmlInitialization;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder;
-import es.rickyepoderi.wbxml.document.WbXmlVersion;
+import com.xpo.wbxml.document.WbXmlEncoder;
+import com.xpo.wbxml.document.WbXmlVersion;
 import java.io.File;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -149,7 +149,7 @@ public class VersionDifferencesTest extends GenericDirectoryTester {
         // opaque tag in version 1.0 should work but log WARNING throws
         MyCustomHandler hd = new MyCustomHandler(Level.WARNING, "does not accept tag opaques");
         hd.setLevel(Level.WARNING);
-        Logger logger = Logger.getLogger("es.rickyepoderi.wbxml");
+        Logger logger = Logger.getLogger("com.xpo.wbxml");
         logger.addHandler(hd);
         File f = new File(this.getDirectory() + "/wv-069-opaque-tag.xml");
         WbXmlDefinition def = WbXmlInitialization.getDefinitionByName("WV CSP 1.1");
@@ -256,7 +256,7 @@ public class VersionDifferencesTest extends GenericDirectoryTester {
         // opaque attribute in version 1.1 should work but log WARNING throws
         MyCustomHandler hd = new MyCustomHandler(Level.WARNING, "does not accept attribute opaques");
         hd.setLevel(Level.WARNING);
-        Logger logger = Logger.getLogger("es.rickyepoderi.wbxml");
+        Logger logger = Logger.getLogger("com.xpo.wbxml");
         logger.addHandler(hd);
         File f = new File(this.getDirectory() + "/emn-001-opaque-attr.xml");
         WbXmlDefinition def = WbXmlInitialization.getDefinitionByName("EMN 1.0");

@@ -36,7 +36,7 @@
 package es.rickyepoderi.wbxml.test;
 
 import com.xpo.wbxml.definition.WbXmlInitialization;
-import es.rickyepoderi.wbxml.document.WbXmlEncoder;
+import com.xpo.wbxml.document.WbXmlEncoder;
 import org.testng.annotations.Test;
 
 /**

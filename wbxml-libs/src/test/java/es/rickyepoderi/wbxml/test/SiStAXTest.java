@@ -37,8 +37,8 @@ package es.rickyepoderi.wbxml.test;
 
 import es.rickyepoderi.wbxml.bind.si.Indication;
 import es.rickyepoderi.wbxml.bind.si.Si;
-import es.rickyepoderi.wbxml.stream.WbXmlInputFactory;
-import es.rickyepoderi.wbxml.stream.WbXmlOutputFactory;
+import com.xpo.wbxml.stream.WbXmlInputFactory;
+import com.xpo.wbxml.stream.WbXmlOutputFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
